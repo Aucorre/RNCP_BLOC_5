@@ -1,0 +1,38 @@
+{
+    "model_name": "HistGradientBoostingRegressor",
+    "version": "1.0.0",
+    "region": "Nouvelle-Aquitaine",
+    "forecast_horizon": "24h",
+    "target": "target_consumption_t_plus_24h",
+    "features": [
+        "consumption_t",
+        "day_of_week",
+        "day_of_year",
+        "dow_cos",
+        "consumption_lag_48h",
+        "month_cos",
+        "hour_cos",
+        "consumption_lag_30min",
+        "hour",
+        "half_hour_slot"
+    ],
+    "hyperparameters": {
+        "min_samples_leaf": 60,
+        "max_leaf_nodes": 15,
+        "max_iter": 200,
+        "learning_rate": 0.03,
+        "l2_regularization": 5.0
+    },
+    "test_metrics": {
+        "MAE": 208.76847285581667,
+        "RMSE": 287.5997532043663,
+        "R2": 0.9248180117746249
+    },
+    "baseline_test_metrics": {
+        "MAE": 257.92738802559415,
+        "RMSE": 356.4455572341137,
+        "R2": 0.8845156323639725
+    },
+    "training_period_end": "2024-12-31",
+    "test_period": "2025"
+}

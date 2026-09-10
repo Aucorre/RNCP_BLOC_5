@@ -1,0 +1,23 @@
+artifact_path: file:c:/Users/audrencorre/OneDrive - GROUPE BERNARD/Documents/RNCP_BLOC_5/notebooks/mlruns/1/models/m-a1ba3b90c6ba4affbbe83ca0b54b6e42/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.12.10
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.0
+    skops_trusted_types: null
+mlflow_version: 3.16.0
+model_id: m-a1ba3b90c6ba4affbbe83ca0b54b6e42
+model_size_bytes: 1132806
+model_uuid: m-a1ba3b90c6ba4affbbe83ca0b54b6e42
+prompts: null
+run_id: b200972dd8c946088bc633e0b6ee313c
+utc_time_created: '2026-09-10 13:59:12.445451'
