@@ -1,352 +1,338 @@
-# Prévision de la consommation électrique régionale
+# Prévision de la consommation électrique régionale à J+1
+
+## Présentation du projet
+
+Ce projet a été réalisé dans le cadre du bloc 5 du titre RNCP39586  
+**« Ingénieur en science des données spécialisé en infrastructure data ou en apprentissage automatique »**.
+
+L’objectif est de construire un système de prévision de la consommation électrique à court terme pour la région **Nouvelle-Aquitaine**.
+
+Le modèle cherche à prédire la consommation électrique **24 heures à l’avance**, à partir de données historiques de consommation et de variables temporelles construites à partir de la série.
+
+Le projet couvre l’ensemble du cycle de vie d’un modèle de Machine Learning :
+
+- analyse du besoin ;
+- préparation des données ;
+- construction et sélection des variables ;
+- entraînement et comparaison de modèles ;
+- optimisation des hyperparamètres ;
+- évaluation sur une période future ;
+- sauvegarde et réutilisation du modèle ;
+- suivi des performances ;
+- automatisation des tests ;
+- gestion du cycle de vie et du réentraînement.
+
+---
 
 ## Contexte
 
-L'équilibre entre production et consommation d'électricité doit être assuré en permanence. La consommation varie fortement selon l'heure, le jour de la semaine, la saison, les périodes de vacances et les conditions météorologiques.
+La consommation d’électricité varie fortement selon :
 
-Pouvoir anticiper ces variations permet aux gestionnaires du réseau de mieux adapter les moyens de production à la demande, de limiter les déséquilibres et de faciliter l'intégration de productions renouvelables variables.
+- l’heure de la journée ;
+- le jour de la semaine ;
+- la saison ;
+- les habitudes de consommation ;
+- les conditions extérieures ;
+- les périodes de forte demande.
 
-Ce projet vise à développer un modèle de Machine Learning capable de prévoir à court terme la consommation électrique d'une région française à partir de données historiques de consommation, de variables calendaires et, dans un second temps, de données météorologiques.
+Pouvoir anticiper ces variations permet aux gestionnaires du réseau de mieux adapter la production à la demande.
 
-Le projet est réalisé dans le cadre du bloc 5 de la certification RNCP39586 :
+Une prévision plus précise peut notamment contribuer à :
 
-> Concevoir et déployer des modèles d'apprentissage automatique.
+- limiter les déséquilibres entre production et consommation ;
+- mieux anticiper les pics de demande ;
+- réduire le recours à des moyens de production coûteux ;
+- faciliter l’intégration de sources de production variables.
 
----
-
-## Problématique
-
-L'objectif du projet est de répondre à la question suivante :
-
-> Peut-on prévoir la consommation électrique future d'une région française à partir de son historique récent de consommation, du contexte calendaire et de variables explicatives externes ?
-
-La tâche principale est une **régression sur série temporelle**.
-
-L'horizon de prévision définitif sera fixé après l'analyse exploratoire des données. Plusieurs horizons pourront être évalués, par exemple :
-
-- H+1 ;
-- H+24 ;
-- même pas de temps le lendemain.
-
-Le projet commencera sur une région afin de valider la méthodologie avant d'envisager une généralisation à plusieurs régions.
+Le problème constitue également un cas d’usage intéressant de Machine Learning, car il s’agit d’une **série temporelle**, pour laquelle l’ordre chronologique des observations doit être respecté.
 
 ---
 
-## Intérêt métier
+## Objectif
 
-Une prévision fiable de la demande électrique peut contribuer à :
+L’objectif retenu est de prédire :
 
-- mieux anticiper les périodes de forte consommation ;
-- améliorer l'équilibrage entre production et consommation ;
-- réduire le recours à des moyens de production coûteux lors des pics ;
-- mieux planifier les échanges et les besoins de flexibilité ;
-- faciliter l'intégration des énergies renouvelables.
+> **la consommation électrique en Nouvelle-Aquitaine 24 heures après l’instant courant.**
 
-L'objectif du projet n'est pas de reproduire les outils opérationnels de RTE, mais de construire et d'évaluer une chaîne de Machine Learning cohérente sur des données ouvertes réelles.
+Le problème est donc formulé comme une **régression sur série temporelle**.
 
----
+### Périmètre retenu
 
-## Source de données principale
+- Région : **Nouvelle-Aquitaine**
+- Granularité : **30 minutes**
+- Horizon principal : **J+1 / H+24**
+- Variable cible : consommation électrique en MW
+- Période de travail : données récentes à partir de 2019
+- Jeu de test final : année 2025
 
-### Données éCO2mix régionales consolidées et définitives
-
-Source : **RTE / ODRE / data.gouv.fr**
-
-Jeu de données utilisé comme source principale pour la consommation électrique régionale.
-
-[Données eco2mix regionales consolidées et définitives](https://www.data.gouv.fr/datasets/donnees-eco2mix-regionales-consolidees-et-definitives/reuses_and_dataservices)
-
-Le fichier téléchargé contient environ **3 millions de lignes** pour un volume d'environ **400 Mo**.
-
-L'extrait inspecté comporte notamment les variables suivantes :
-
-- `Code INSEE région`
-- `Région`
-- `Nature`
-- `Date`
-- `Heure`
-- `Date - Heure`
-- `Consommation (MW)`
-- `Thermique (MW)`
-- `Nucléaire (MW)`
-- `Eolien (MW)`
-- `Solaire (MW)`
-- `Hydraulique (MW)`
-- `Pompage (MW)`
-- `Bioénergies (MW)`
-- `Ech. physiques (MW)`
-- `Stockage batterie`
-- `Déstockage batterie`
-- `Eolien terrestre`
-- `Eolien offshore`
-- différents taux de couverture et de charge par filière.
-
-Les premières années du jeu présentent davantage de valeurs absentes sur certaines variables de production, tandis que les années récentes sont plus complètes. Ce point devra être quantifié précisément pendant l'exploration avant de fixer la période d'étude.
+Une expérience complémentaire de prévision à **J+7** a également été réalisée afin d’étudier l’impact de l’allongement de l’horizon de prévision.
 
 ---
 
-## Sources complémentaires envisagées
+## Données
 
-### Données météorologiques
+Les données utilisées proviennent du jeu de données public **éCO2mix régional**, publié par RTE / ODRÉ.
 
-Une source météorologique ouverte sera ajoutée afin d'étudier l'effet de variables telles que :
+Le fichier source contient plusieurs millions d’observations de consommation et de production électrique à une granularité de 30 minutes.
 
-- température ;
-- température minimale et maximale ;
-- éventuellement humidité, vent ou nébulosité si leur intérêt est démontré.
+Parmi les principales informations disponibles :
 
-La source et la granularité seront choisies après définition de la région et de l'horizon de prévision.
+- région ;
+- date et heure ;
+- consommation électrique ;
+- production thermique ;
+- production nucléaire ;
+- production éolienne ;
+- production solaire ;
+- production hydraulique ;
+- bioénergies ;
+- échanges physiques ;
+- autres indicateurs liés au système électrique.
 
-### Données calendaires
-
-Des variables calendaires pourront être construites ou enrichies à partir de sources publiques :
-
-- heure ;
-- jour de la semaine ;
-- week-end ;
-- mois ;
-- saison ;
-- jours fériés ;
-- vacances scolaires.
+Pour ce projet, le modèle principal utilise principalement l’historique de consommation ainsi que des variables temporelles dérivées.
 
 ---
 
-## Unité d'observation
+## Analyse exploratoire
 
-L'unité d'observation est un **pas de temps pour une région donnée**.
+Le premier notebook est consacré à l’analyse du jeu de données.
 
-Chaque ligne du futur jeu de données Machine Learning représentera les informations disponibles jusqu'à un instant `t`, associées à la consommation observée à un instant futur `t+h`.
+Les principaux points étudiés sont :
 
-Exemple conceptuel :
+- volume des données ;
+- période couverte ;
+- nombre de régions ;
+- fréquence temporelle ;
+- types de variables ;
+- taux de valeurs manquantes ;
+- présence de doublons ;
+- continuité temporelle ;
+- évolution de la consommation ;
+- saisonnalité journalière ;
+- saisonnalité hebdomadaire ;
+- saisonnalité annuelle.
 
-| Date - Heure | Région | Conso t | Conso t-1 | Conso t-24 | Calendrier | Météo | Cible conso t+h |
-|---|---|---:|---:|---:|---|---|---:|
-| 2026-01-10 14:00 | Région A | ... | ... | ... | ... | ... | ... |
+L’analyse met notamment en évidence :
+
+- une forte dépendance de la consommation à l’heure de la journée ;
+- des profils différents entre jours ouvrés et week-ends ;
+- une saisonnalité annuelle ;
+- une fréquence principale de 30 minutes ;
+- quelques anomalies liées notamment aux changements d’heure.
 
 ---
 
-## Variable cible
+## Construction des variables
 
-La variable cible sera dérivée de :
+La préparation du dataset Machine Learning repose sur plusieurs familles de variables.
 
-`Consommation (MW)`
+### Variables historiques
 
-Pour un horizon `h`, la cible prendra la forme :
+Des lags de consommation sont construits à différents horizons :
 
-`Consommation_t_plus_h`
-
-Il s'agit d'une variable quantitative continue exprimée en MW.
-
-La valeur de `h` sera fixée après l'analyse de la fréquence réelle des observations et des besoins métier retenus.
-
----
-
-## Variables explicatives envisagées
-
-La liste définitive sera déterminée à partir de l'analyse exploratoire et d'une méthode de sélection de variables.
-
-### Historique de consommation
-
-Des variables retardées pourront notamment être construites :
-
-- consommation au pas précédent ;
-- consommation à la même heure la veille ;
-- consommation à la même heure la semaine précédente ;
-- variations récentes de consommation.
+- 30 minutes ;
+- 1 heure ;
+- 3 heures ;
+- 6 heures ;
+- 24 heures ;
+- 48 heures ;
+- 7 jours.
 
 ### Statistiques glissantes
 
-- moyenne glissante sur plusieurs pas de temps ;
-- moyenne glissante journalière ;
-- moyenne glissante hebdomadaire ;
-- minimum et maximum récents ;
-- volatilité ou écart-type récent.
+Des statistiques glissantes sont calculées sur différentes fenêtres :
+
+- moyenne sur 24 heures ;
+- moyenne sur 7 jours ;
+- écart-type sur 24 heures ;
+- écart-type sur plusieurs jours.
+
+### Variables de tendance
+
+Des différences entre la consommation actuelle et certaines consommations passées sont également construites.
 
 ### Variables calendaires
 
+Les variables temporelles incluent notamment :
+
 - heure ;
+- minute ;
 - jour de la semaine ;
-- week-end ;
 - mois ;
-- saison ;
-- jour férié ;
-- vacances scolaires.
+- jour de l’année ;
+- week-end ;
+- créneau de demi-heure.
 
-### Variables météorologiques
-
-Sous réserve de disponibilité et de pertinence :
-
-- température ;
-- température ressentie ou indicateur équivalent ;
-- autres variables météorologiques retenues après analyse.
-
-### Variables issues du système électrique
-
-Le dataset contient également des informations de production et d'échanges.
-
-Ces variables ne seront utilisées qu'après vérification de leur disponibilité réelle au moment de la prédiction. Pour éviter toute fuite d'information, les valeurs contemporaines ou futures inconnues au moment de l'inférence ne devront pas être utilisées comme variables explicatives.
-
-Des valeurs historiques retardées de certaines filières pourront en revanche être étudiées si elles apportent une information pertinente.
+Des transformations cycliques sinus / cosinus sont utilisées afin de représenter correctement les variables périodiques.
 
 ---
 
-## Méthodologie envisagée
+## Baseline
 
-Le projet suivra les étapes suivantes :
+Avant d’entraîner les modèles de Machine Learning, une baseline temporelle est définie.
 
-1. Compréhension et exploration des données
-2. Analyse de la complétude selon les années et les régions
-3. Choix de la période et de la région d'étude
-4. Nettoyage et préparation
-5. Construction de la variable cible
-6. Feature engineering temporel et calendaire
-7. Intégration éventuelle des données météorologiques
-8. Sélection des variables
-9. Construction de plusieurs baselines
-10. Entraînement de plusieurs modèles de régression
-11. Validation temporelle
-12. Évaluation et comparaison
-13. Optimisation des hyperparamètres
-14. Analyse détaillée des erreurs
-15. Sauvegarde du modèle
-16. Préparation du déploiement
-17. Mise en place du CI/CD
-18. Monitoring des performances
-19. Collecte et historisation des nouvelles données
+Pour la prévision à J+1 :
+
+> la consommation de demain au même créneau est supposée égale à la consommation observée aujourd’hui.
+
+Cette baseline sert de référence afin de mesurer la valeur ajoutée réelle des modèles.
 
 ---
 
-## Baselines
+## Séparation temporelle
 
-Avant tout modèle de Machine Learning, plusieurs méthodes naïves seront évaluées.
+Les données ne sont pas mélangées aléatoirement.
 
-Exemples :
+La séparation respecte la chronologie :
 
-- dernière valeur connue ;
-- consommation observée au même horaire la veille ;
-- consommation observée au même horaire la semaine précédente ;
-- moyenne historique pour un créneau comparable.
+- entraînement : données historiques ;
+- validation : année 2024 ;
+- test final : année 2025.
 
-Ces baselines permettront de vérifier que le modèle apporte une amélioration réelle par rapport à des règles simples adaptées aux séries temporelles électriques.
+Le jeu de test n’est pas utilisé pour sélectionner le modèle ou ses hyperparamètres.
 
----
+Lors de l’optimisation, une validation croisée temporelle est utilisée avec `TimeSeriesSplit`.
 
-## Stratégie d'évaluation
-
-Les données étant temporelles, aucune séparation aléatoire classique ne sera utilisée.
-
-L'entraînement, la validation et le test respecteront l'ordre chronologique afin de reproduire une situation réelle :
-
-> apprendre sur le passé et prédire une période future.
-
-Une validation de type `TimeSeriesSplit` ou une validation chronologique équivalente pourra être utilisée lors de l'optimisation.
-
-Les métriques envisagées sont notamment :
-
-- MAE ;
-- RMSE ;
-- R² ;
-- éventuellement MAPE ou sMAPE après vérification de leur pertinence.
-
-L'évaluation ne se limitera pas à une métrique globale. Une attention particulière sera portée :
-
-- aux pics de consommation ;
-- aux différentes saisons ;
-- aux heures de pointe et heures creuses ;
-- aux jours ouvrés, week-ends et jours fériés.
+Un intervalle de sécurité est ajouté entre les périodes d’entraînement et de validation afin d’éviter que la cible future des dernières observations d’entraînement ne chevauche la période de validation.
 
 ---
 
-## Vigilances méthodologiques
+## Modèles comparés
 
-Plusieurs risques devront être contrôlés :
+Plusieurs approches ont été comparées.
 
-- fuite de données entre l'instant de prédiction et la cible ;
-- utilisation de variables qui ne seraient pas disponibles au moment réel de l'inférence ;
-- incohérences ou ruptures temporelles ;
-- valeurs manquantes sur les années les plus anciennes ;
-- évolution du schéma et de la complétude au fil du temps ;
-- changement éventuel de pas temporel ;
-- effets calendaires et saisonniers ;
-- différences entre régions ;
-- surapprentissage sur une période particulière ;
-- reproductibilité des traitements.
+### Ridge Regression
 
----
+Un modèle linéaire régularisé est utilisé comme premier modèle Machine Learning.
 
-## Modèles envisagés
+Il sert notamment à comparer une approche linéaire à des modèles capables de capturer des relations plus complexes.
 
-La sélection définitive sera réalisée après exploration des données.
+### HistGradientBoostingRegressor
 
-Une première comparaison pourra inclure :
+Le modèle principal retenu est un :
 
-- régression linéaire régularisée ;
-- Random Forest ;
-- HistGradientBoosting ;
-- XGBoost ou LightGBM si leur utilisation apporte un bénéfice mesurable.
+`HistGradientBoostingRegressor`
 
-Les modèles seront comparés aux baselines temporelles avant toute optimisation poussée.
+Ce modèle est adapté aux datasets relativement volumineux et permet de modéliser des relations non linéaires entre les variables.
 
 ---
 
-## Organisation du projet
+## Sélection des variables
+
+La sélection des variables repose sur plusieurs approches :
+
+- analyse de corrélation ;
+- analyse métier ;
+- permutation importance.
+
+La permutation importance permet d’identifier les variables dont la perturbation dégrade le plus les performances du modèle.
+
+Le modèle initial utilise environ 27 variables.
+
+Après sélection, seules les **10 variables les plus importantes** sont conservées.
+
+Cette réduction permet de supprimer plus de 60 % des variables tout en conservant des performances quasiment identiques.
+
+### Comparaison
+
+| Configuration | MAE | RMSE | R² |
+|---|---:|---:|---:|
+| HGB toutes variables | ~206 MW | ~294 MW | ~0.912 |
+| HGB top 10 variables | ~207 MW | ~295 MW | ~0.912 |
+
+La perte de performance est très faible malgré une réduction importante du nombre de variables.
+
+---
+
+## Optimisation des hyperparamètres
+
+Le modèle retenu est optimisé avec `RandomizedSearchCV`.
+
+Les principaux hyperparamètres explorés sont :
+
+- `learning_rate` ;
+- `max_iter` ;
+- `max_leaf_nodes` ;
+- `min_samples_leaf` ;
+- `l2_regularization`.
+
+La validation utilise `TimeSeriesSplit` afin de respecter la chronologie des observations.
+
+L’optimisation apporte un gain limité par rapport au modèle par défaut.
+
+Ce résultat indique que les paramètres standards du HistGradientBoosting étaient déjà bien adaptés au problème.
+
+---
+
+## Résultats finaux
+
+Le modèle final est évalué sur l’année **2025**, conservée comme jeu de test indépendant.
+
+### Baseline J+1
+
+- MAE : environ **258 MW**
+- RMSE : environ **356 MW**
+- R² : environ **0,885**
+
+### HistGradientBoosting optimisé
+
+- MAE : environ **209 MW**
+- RMSE : environ **288 MW**
+- R² : environ **0,925**
+
+Le modèle réduit donc la MAE et la RMSE d’environ **19 %** par rapport à la baseline.
+
+L’amélioration principale provient du choix du modèle et du feature engineering, davantage que de l’optimisation des hyperparamètres.
+
+---
+
+## Analyse des erreurs
+
+Une analyse complémentaire est réalisée sur les périodes de forte consommation.
+
+Les performances se dégradent sur les 10 % d’observations présentant les consommations les plus élevées.
+
+Cela montre que le modèle reproduit correctement la dynamique générale de la série, mais reste moins précis pendant certains pics de consommation.
+
+Cette limite constitue un axe d’amélioration possible.
+
+Des variables météorologiques ou calendaires supplémentaires pourraient notamment améliorer la capacité du modèle à anticiper ces situations.
+
+---
+
+## Prévision à J+7
+
+Une expérience complémentaire étudie un horizon de prévision à **7 jours**.
+
+L’objectif est de comparer les performances avec le modèle principal à J+1 et d’observer l’impact de l’allongement de l’horizon.
+
+Cette expérience n’est pas utilisée comme modèle principal du projet.
+
+Elle permet principalement d’étudier les limites de prédictibilité à partir des seules données historiques disponibles.
+
+---
+
+## Sauvegarde et réutilisation du modèle
+
+Le modèle final est sauvegardé sous forme d’artefact avec `joblib`.
+
+Les métadonnées associées sont stockées dans un fichier JSON.
+
+Elles contiennent notamment :
+
+- nom du modèle ;
+- version ;
+- région ;
+- horizon de prévision ;
+- variable cible ;
+- variables utilisées ;
+- hyperparamètres ;
+- performances finales ;
+- performances de la baseline.
+
+Structure :
 
 ```text
-electricity-consumption-ml/
-│
-├── README.md
-├── requirements.txt
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── notebooks/
-├── src/
-├── artifacts/
-├── tests/
-└── docs/
-```
-
----
-
-## Lien avec le bloc 5 RNCP
-
-Le projet doit permettre de produire des preuves concrètes pour les différentes compétences du bloc 5 :
-
-- analyse du besoin ;
-- définition et justification de la stratégie de résolution ;
-- choix des technologies et outils ;
-- construction d'un jeu de données exploitable ;
-- construction des variables ;
-- sélection des variables ;
-- entraînement de modèles d'apprentissage automatique ;
-- optimisation des performances ;
-- sauvegarde du modèle ;
-- mise en place d'un processus CI/CD ;
-- monitoring des performances ;
-- collecte des nouvelles données et historisation des prédictions.
-
-Une attention particulière sera portée aux compétences éliminatoires relatives à la construction des variables, à leur sélection, à l'entraînement et à l'optimisation des modèles.
-
----
-
-## État du projet
-
-Le sujet et la source de données principale sont définis.
-
-Le dataset brut a été téléchargé et une première inspection montre :
-
-- un volume d'environ 400 Mo ;
-- près de 3 millions de lignes ;
-- une couverture multi-régionale ;
-- de nombreuses variables liées à la consommation, la production et les échanges ;
-- une complétude plus faible sur les premières années que sur les années récentes.
-
-### Prochaine étape
-
-> Réaliser une exploration complète du dataset afin de mesurer précisément la couverture temporelle, le pas de temps, la complétude par année et par région, puis sélectionner la période et la région retenues pour le premier modèle.
-
-
-
-Les nouvelles prédictions et observations réelles sont historisées afin de suivre l’évolution des performances du modèle dans le temps. Une dégradation persistante des indicateurs peut déclencher un réentraînement. Le nouveau modèle est alors enregistré comme candidat dans MLflow et comparé au modèle de référence avant toute promotion.
+artifacts/
+├── electricity_consumption_hgb_j1.joblib
+└── electricity_consumption_hgb_j1_metadata.json
