@@ -7,6 +7,9 @@ import joblib
 import pandas as pd
 
 from src.features import build_features
+from src.monitoring import log_prediction
+from src.monitoring import update_actual_value
+
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -96,6 +99,20 @@ def predict_consumption(
     target_timestamp = (
         timestamp_t
         + pd.Timedelta(hours=24)
+    )
+
+    log_prediction(
+        source_timestamp=timestamp_t,
+        prediction_timestamp=target_timestamp,
+        prediction_mw=prediction,
+        model_version=metadata.get(
+            "version",
+            "unknown",
+        ),
+        region=metadata.get(
+            "region",
+            "unknown",
+        ),
     )
 
     return {
