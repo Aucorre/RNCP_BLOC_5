@@ -346,3 +346,7 @@ Le dataset brut a été téléchargé et une première inspection montre :
 ### Prochaine étape
 
 > Réaliser une exploration complète du dataset afin de mesurer précisément la couverture temporelle, le pas de temps, la complétude par année et par région, puis sélectionner la période et la région retenues pour le premier modèle.
+
+
+
+Les nouvelles prédictions et observations réelles sont historisées afin de suivre l’évolution des performances du modèle dans le temps. Une dégradation persistante des indicateurs peut déclencher un réentraînement. Le nouveau modèle est alors enregistré comme candidat dans MLflow et comparé au modèle de référence avant toute promotion.
