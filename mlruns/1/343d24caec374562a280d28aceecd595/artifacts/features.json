@@ -1,0 +1,14 @@
+{
+  "features": [
+    "consumption_t",
+    "day_of_week",
+    "day_of_year",
+    "dow_cos",
+    "consumption_lag_48h",
+    "month_cos",
+    "hour_cos",
+    "consumption_lag_30min",
+    "hour",
+    "half_hour_slot"
+  ]
+}
