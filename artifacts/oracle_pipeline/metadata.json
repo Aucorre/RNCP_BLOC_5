@@ -9,15 +9,12 @@
     "day_of_week",
     "day_of_year",
     "dow_cos",
-    "consumption_lag_48h",
     "month_cos",
     "hour_cos",
-    "consumption_lag_30min",
     "hour",
-    "half_hour_slot",
-    "weather_target_day_observed_temperature_2m_mean",
-    "weather_target_day_observed_apparent_temperature_mean",
-    "weather_target_day_observed_weather_code"
+    "weather_target_day_forecasted_temperature_2m_mean",
+    "weather_target_day_forecasted_apparent_temperature_mean",
+    "weather_target_day_forecasted_weather_code"
   ],
   "hyperparameters": {
     "min_samples_leaf": 60,
@@ -26,9 +23,8 @@
     "learning_rate": 0.03,
     "l2_regularization": 5.0
   },
-  "weather_alignment": "observed_target_local_day",
-  "experimental_oracle": true,
-  "limitation": "Météo future observée requise : simulation rétrospective, pas une prévision opérationnelle.",
+  "weather_alignment": "forecasted_target_local_day",
+  "experimental_oracle": false,
   "weather_csv": "C:\\Users\\Audren\\Ynov M2\\RNCP\\BLOC 5\\RNCP_BLOC_5\\data\\weather\\regional_daily.csv",
   "periods": {
     "2024": {
