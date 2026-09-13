@@ -1,0 +1,9 @@
+{
+  "latitude": "44.84,45.83,46.16,43.49,43.30",
+  "longitude": "-0.58,1.26,-1.15,-1.47,-0.37",
+  "start_date": "2025-01-01",
+  "end_date": "2025-12-31",
+  "hourly": "temperature_2m_previous_day2,apparent_temperature_previous_day2,weather_code_previous_day2",
+  "models": "icon_global",
+  "timezone": "UTC"
+}

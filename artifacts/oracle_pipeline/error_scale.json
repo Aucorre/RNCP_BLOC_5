@@ -1,0 +1,8 @@
+{
+  "period": "test 2025",
+  "rows": 17511,
+  "mean_consumption_mw": 4717.350808063503,
+  "mae_mw": 161.78931590367438,
+  "mae_over_mean_percent": 3.4296647098435686,
+  "note": "MAE / consommation moyenne ; ce ratio n'est pas la MAPE. Météo future observée."
+}

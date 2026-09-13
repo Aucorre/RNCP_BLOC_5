@@ -1,0 +1,57 @@
+{
+  "weather_model": "icon_global",
+  "offset": "previous_day2",
+  "availability_assumption": "48h nominal lead; 24h margin before source time. Actual publication timestamps not supplied by this API.",
+  "alignment": "floor(target H+24 to UTC hour); no daily averaging",
+  "coverage_first": "2024-01-20 12:00:00+00:00",
+  "coverage_last": "2025-12-31 23:00:00+00:00",
+  "train_rows": 16577,
+  "test_rows": 17511,
+  "train_first": "2024-01-19 12:00:00+00:00",
+  "train_last": "2024-12-29 23:30:00+00:00",
+  "test_first": "2024-12-31 00:00:00+00:00",
+  "test_last": "2025-12-30 22:30:00+00:00",
+  "features": [
+    "consumption_t",
+    "day_of_week",
+    "day_of_year",
+    "dow_cos",
+    "consumption_lag_48h",
+    "month_cos",
+    "hour_cos",
+    "consumption_lag_30min",
+    "hour",
+    "half_hour_slot",
+    "forecast_temperature_2m",
+    "forecast_apparent_temperature",
+    "forecast_weather_code"
+  ],
+  "hyperparameters": {
+    "min_samples_leaf": 60,
+    "max_leaf_nodes": 15,
+    "max_iter": 200,
+    "learning_rate": 0.03,
+    "l2_regularization": 5.0
+  },
+  "note": "Fixed model; no tuning on 2025. Oracle daily vs forecast hourly: comparison also changes granularity.",
+  "metrics": [
+    {
+      "model": "sans_meteo",
+      "MAE": 226.66664489226764,
+      "RMSE": 324.58522566102994,
+      "R2": 0.9031890969882168
+    },
+    {
+      "model": "meteo_prevue",
+      "MAE": 177.4068983366487,
+      "RMSE": 247.51491091640688,
+      "R2": 0.9437050407179481
+    },
+    {
+      "model": "oracle",
+      "MAE": 178.30226313225086,
+      "RMSE": 249.25493772153226,
+      "R2": 0.9429107528256548
+    }
+  ]
+}

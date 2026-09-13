@@ -1,0 +1,299 @@
+[
+  {
+    "model": "meteofrance_arpege_europe",
+    "date": "2024-01-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2024-01-15&end_date=2024-01-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=meteofrance_arpege_europe&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      }
+    ]
+  },
+  {
+    "model": "meteofrance_arpege_europe",
+    "date": "2025-01-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2025-01-15&end_date=2025-01-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=meteofrance_arpege_europe&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      }
+    ]
+  },
+  {
+    "model": "meteofrance_arpege_europe",
+    "date": "2025-12-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2025-12-15&end_date=2025-12-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=meteofrance_arpege_europe&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 24
+      }
+    ]
+  },
+  {
+    "model": "icon_global",
+    "date": "2024-01-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2024-01-15&end_date=2024-01-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=icon_global&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      }
+    ]
+  },
+  {
+    "model": "icon_global",
+    "date": "2025-01-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2025-01-15&end_date=2025-01-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=icon_global&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      }
+    ]
+  },
+  {
+    "model": "icon_global",
+    "date": "2025-12-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2025-12-15&end_date=2025-12-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=icon_global&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      }
+    ]
+  },
+  {
+    "model": "gfs_global",
+    "date": "2024-01-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2024-01-15&end_date=2024-01-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=gfs_global&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      },
+      {
+        "temperature_2m_previous_day1": 0,
+        "apparent_temperature_previous_day1": 0,
+        "weather_code_previous_day1": 0
+      }
+    ]
+  },
+  {
+    "model": "gfs_global",
+    "date": "2025-01-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2025-01-15&end_date=2025-01-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=gfs_global&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      }
+    ]
+  },
+  {
+    "model": "gfs_global",
+    "date": "2025-12-15",
+    "status": 200,
+    "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=44.84%2C45.83%2C46.16%2C43.49%2C43.30&longitude=-0.58%2C1.26%2C-1.15%2C-1.47%2C-0.37&start_date=2025-12-15&end_date=2025-12-15&hourly=temperature_2m_previous_day1%2Capparent_temperature_previous_day1%2Cweather_code_previous_day1&models=gfs_global&timezone=UTC",
+    "non_null_by_city": [
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      },
+      {
+        "temperature_2m_previous_day1": 24,
+        "apparent_temperature_previous_day1": 24,
+        "weather_code_previous_day1": 24
+      }
+    ]
+  }
+]
