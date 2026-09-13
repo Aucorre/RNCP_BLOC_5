@@ -58,6 +58,7 @@ def load_metadata() -> dict:
 
 def predict_consumption(
     history: pd.DataFrame,
+    weather: pd.DataFrame | None = None,
 ) -> dict:
     """
     Prédit la consommation électrique à J+1 à partir
@@ -71,7 +72,13 @@ def predict_consumption(
 
     feature_names = metadata["features"]
 
-    enriched = build_features(history)
+    from src.weather import WEATHER_FEATURES
+    uses_weather = bool(set(feature_names) & set(WEATHER_FEATURES))
+    if uses_weather and weather is None:
+        raise ValueError("Ce modèle nécessite les données météo quotidiennes.")
+    enriched = build_features(history, weather=weather if uses_weather else None)
+    if uses_weather and enriched.iloc[[-1]][WEATHER_FEATURES].isna().any().any():
+        raise ValueError("Météo manquante pour la veille du dernier instant de consommation.")
 
     available_rows = enriched.dropna(
         subset=feature_names

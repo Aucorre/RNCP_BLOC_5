@@ -1,0 +1,7 @@
+{
+  "source_timestamp": "2025-12-30 22:30:00+00:00",
+  "target_timestamp": "2025-12-31 22:30:00+00:00",
+  "prediction_mw": 7190.87584083646,
+  "actual_mw": 7196.0,
+  "experimental_oracle": true
+}

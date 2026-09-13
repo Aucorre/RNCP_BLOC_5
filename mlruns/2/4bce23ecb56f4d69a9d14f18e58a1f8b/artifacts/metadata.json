@@ -1,0 +1,94 @@
+{
+  "model_name": "HistGradientBoostingRegressor",
+  "version": "2.0.0-oracle",
+  "region": "Nouvelle-Aquitaine",
+  "forecast_horizon": "24h",
+  "target": "target_consumption_t_plus_24h",
+  "features": [
+    "consumption_t",
+    "day_of_week",
+    "day_of_year",
+    "dow_cos",
+    "consumption_lag_48h",
+    "month_cos",
+    "hour_cos",
+    "consumption_lag_30min",
+    "hour",
+    "half_hour_slot",
+    "weather_target_day_observed_temperature_2m_mean",
+    "weather_target_day_observed_apparent_temperature_mean",
+    "weather_target_day_observed_weather_code"
+  ],
+  "hyperparameters": {
+    "min_samples_leaf": 60,
+    "max_leaf_nodes": 15,
+    "max_iter": 200,
+    "learning_rate": 0.03,
+    "l2_regularization": 5.0
+  },
+  "weather_alignment": "observed_target_local_day",
+  "experimental_oracle": true,
+  "limitation": "Météo future observée requise : simulation rétrospective, pas une prévision opérationnelle.",
+  "weather_csv": "C:\\Users\\Audren\\Ynov M2\\RNCP\\BLOC 5\\RNCP_BLOC_5\\data\\weather\\regional_daily.csv",
+  "periods": {
+    "2024": {
+      "train_rows": 87517,
+      "evaluation_rows": 17561,
+      "train_source_end": "2023-12-29 23:30:00+00:00",
+      "evaluation_target_start": "2024-01-01 00:00:00+00:00",
+      "evaluation_target_end": "2024-12-31 23:30:00+00:00"
+    },
+    "2025": {
+      "train_rows": 105078,
+      "evaluation_rows": 17511,
+      "train_source_end": "2024-12-29 23:30:00+00:00",
+      "evaluation_target_start": "2025-01-01 00:00:00+00:00",
+      "evaluation_target_end": "2025-12-31 22:30:00+00:00"
+    }
+  },
+  "selection": "Variables et hyperparamètres conservés ; aucun réglage sur le test 2025.",
+  "metrics": [
+    {
+      "year": 2024,
+      "model": "baseline",
+      "MAE": 277.43989522236774,
+      "RMSE": 383.57072504352453,
+      "R2": 0.8491155523751952
+    },
+    {
+      "year": 2024,
+      "model": "sans_meteo",
+      "MAE": 205.64241070982553,
+      "RMSE": 290.4329530584521,
+      "R2": 0.9134941751186132
+    },
+    {
+      "year": 2024,
+      "model": "meteo_parfaite",
+      "MAE": 159.93963167516836,
+      "RMSE": 218.52217124161595,
+      "R2": 0.9510283671972164
+    },
+    {
+      "year": 2025,
+      "model": "baseline",
+      "MAE": 258.9252469876078,
+      "RMSE": 357.85723842783636,
+      "R2": 0.8823244091423796
+    },
+    {
+      "year": 2025,
+      "model": "sans_meteo",
+      "MAE": 207.44797633396018,
+      "RMSE": 285.91710479827475,
+      "R2": 0.924881475244212
+    },
+    {
+      "year": 2025,
+      "model": "meteo_parfaite",
+      "MAE": 161.78931590367438,
+      "RMSE": 217.47869117628233,
+      "R2": 0.9565389517868956
+    }
+  ]
+}

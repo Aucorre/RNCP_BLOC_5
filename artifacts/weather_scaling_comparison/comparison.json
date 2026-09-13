@@ -1,0 +1,77 @@
+{
+  "train_rows": 87517,
+  "validation_rows": 17561,
+  "validation_target_start": "2024-01-01 00:00:00+00:00",
+  "validation_target_end": "2024-12-31 23:30:00+00:00",
+  "features": {
+    "sans_meteo": [
+      "consumption_t",
+      "day_of_week",
+      "day_of_year",
+      "dow_cos",
+      "consumption_lag_48h",
+      "month_cos",
+      "hour_cos",
+      "consumption_lag_30min",
+      "hour",
+      "half_hour_slot"
+    ],
+    "avec_meteo": [
+      "consumption_t",
+      "day_of_week",
+      "day_of_year",
+      "dow_cos",
+      "consumption_lag_48h",
+      "month_cos",
+      "hour_cos",
+      "consumption_lag_30min",
+      "hour",
+      "half_hour_slot",
+      "weather_previous_day_temperature_2m_mean",
+      "weather_previous_day_apparent_temperature_mean",
+      "weather_previous_day_weather_code"
+    ],
+    "sans_meteo_standardise": [
+      "consumption_t",
+      "day_of_week",
+      "day_of_year",
+      "dow_cos",
+      "consumption_lag_48h",
+      "month_cos",
+      "hour_cos",
+      "consumption_lag_30min",
+      "hour",
+      "half_hour_slot"
+    ],
+    "avec_meteo_standardise": [
+      "consumption_t",
+      "day_of_week",
+      "day_of_year",
+      "dow_cos",
+      "consumption_lag_48h",
+      "month_cos",
+      "hour_cos",
+      "consumption_lag_30min",
+      "hour",
+      "half_hour_slot",
+      "weather_previous_day_temperature_2m_mean",
+      "weather_previous_day_apparent_temperature_mean",
+      "weather_previous_day_weather_code"
+    ]
+  },
+  "standardized": {
+    "sans_meteo": false,
+    "avec_meteo": false,
+    "sans_meteo_standardise": true,
+    "avec_meteo_standardise": true
+  },
+  "hyperparameters": {
+    "min_samples_leaf": 60,
+    "max_leaf_nodes": 15,
+    "max_iter": 200,
+    "learning_rate": 0.03,
+    "l2_regularization": 5.0
+  },
+  "weather_alignment": "previous_local_day",
+  "weather_csv": "C:\\Users\\Audren\\Ynov M2\\RNCP\\BLOC 5\\RNCP_BLOC_5\\data\\weather\\regional_daily.csv"
+}

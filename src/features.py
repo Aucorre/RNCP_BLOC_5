@@ -8,7 +8,7 @@ TIMESTAMP_COL = "Date - Heure"
 CONSUMPTION_COL = "Consommation (MW)"
 
 
-def build_features(df: pd.DataFrame) -> pd.DataFrame:
+def build_features(df: pd.DataFrame, weather: pd.DataFrame | None = None) -> pd.DataFrame:
     """
     Construit les variables utilisées par le modèle de prévision J+1.
 
@@ -156,4 +156,7 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
         2 * np.pi * data["month"] / 12
     )
 
+    if weather is not None:
+        from src.weather import add_weather_features
+        data = add_weather_features(data, weather)
     return data

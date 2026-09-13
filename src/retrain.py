@@ -54,7 +54,7 @@ def load_metadata():
         return json.load(f)
 
 
-def prepare_training_data():
+def prepare_training_data(weather=None):
     df = pd.read_csv(
         RAW_PATH,
         sep=";",
@@ -88,7 +88,7 @@ def prepare_training_data():
     )
 
     # Features disponibles à t
-    df = build_features(df)
+    df = build_features(df, weather=weather)
 
     # Construction cible t + 24 h
     target_lookup = (
@@ -122,13 +122,18 @@ def prepare_training_data():
     return df
 
 
-def retrain_model():
+def retrain_model(weather=None):
     metadata = load_metadata()
 
-    features = metadata["features"]
+    from src.weather import WEATHER_FEATURES
+    features = list(metadata["features"])
+    if weather is not None:
+        features = list(dict.fromkeys(features + WEATHER_FEATURES))
+        metadata["features"] = features
+        metadata["weather"] = {"alignment": "previous_local_day", "timezone": "Europe/Paris"}
     params = metadata["hyperparameters"]
 
-    df = prepare_training_data()
+    df = prepare_training_data(weather=weather)
 
     dataset = df[
         ["Date - Heure"]
@@ -144,12 +149,15 @@ def retrain_model():
     )
 
     train = dataset[
-        dataset["Date - Heure"] < cutoff
+        dataset["Date - Heure"] < cutoff - pd.Timedelta(hours=24)
     ].copy()
 
     validation = dataset[
         dataset["Date - Heure"] >= cutoff
     ].copy()
+
+    if train.empty or validation.empty:
+        raise ValueError("Données insuffisantes après jointure météo et séparation temporelle.")
 
     X_train = train[features]
     y_train = train[
@@ -164,6 +172,7 @@ def retrain_model():
     candidate = HistGradientBoostingRegressor(
         **params,
         random_state=42,
+        categorical_features=[name for name in features if name == WEATHER_FEATURES[-1]],
     )
 
     candidate.fit(
@@ -210,6 +219,7 @@ def log_candidate_to_mlflow(
         mlflow.log_params(
             metadata["hyperparameters"]
         )
+        mlflow.log_dict(metadata, "metadata.json")
 
         mlflow.log_metrics({
             "candidate_mae": metrics["MAE"],
@@ -229,7 +239,12 @@ def log_candidate_to_mlflow(
         
     
 if __name__ == "__main__":
-    model, metrics, metadata = retrain_model()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--weather-csv", type=Path)
+    args = parser.parse_args()
+    weather = pd.read_csv(args.weather_csv) if args.weather_csv else None
+    model, metrics, metadata = retrain_model(weather=weather)
 
     log_candidate_to_mlflow(
         model,
